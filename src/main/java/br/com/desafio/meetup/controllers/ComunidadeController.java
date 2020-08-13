@@ -29,7 +29,7 @@ public class ComunidadeController {
 		
 	}
 	
-	@RequestMapping("/form")
+	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public ModelAndView form() {
 		return new ModelAndView("/comunidade/form");
 	}

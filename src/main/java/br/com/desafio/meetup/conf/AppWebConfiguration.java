@@ -1,7 +1,9 @@
 package br.com.desafio.meetup.conf;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -20,6 +22,17 @@ public class AppWebConfiguration {
 		resolver.setSuffix(".jsp");
 		
 		return resolver;
+	}
+	
+	@Bean
+	public MessageSource messageSourcer() {
+		ReloadableResourceBundleMessageSource messageSourcer = 
+				new ReloadableResourceBundleMessageSource();
+		messageSourcer.setBasename("/WEB-INF/messages");
+		messageSourcer.setDefaultEncoding("UTF-8");
+		messageSourcer.setCacheSeconds(1);
+		
+		return messageSourcer;
 	}
 
 }
