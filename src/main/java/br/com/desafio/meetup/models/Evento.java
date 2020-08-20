@@ -1,26 +1,30 @@
 package br.com.desafio.meetup.models;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import br.com.desafio.meetup.utils.TimeUtils;
 
 @Entity
 public class Evento {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	private String nome;
+	private String titulo;
+	@DateTimeFormat
 	private Date data;
-	private String endereco;
-	private String descricao;
-	private String linkEvento;
-	
-	@OneToOne
-	private Comunidade comunidade;
+	private String detalhes;
+	/*@Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
+	private String logoMeetup;*/
+
+	private int comunidadeId;
 
 	public int getId() {
 		return id;
@@ -30,12 +34,36 @@ public class Evento {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getDetalhes() {
+		return detalhes;
+	}
+
+	public void setDetalhes(String detalhes) {
+		this.detalhes = detalhes;
+	}
+
+	/*public String getLogoMeetup() {
+		return logoMeetup;
+	}
+
+	public void setLogoMeetup(String logoMeetup) {
+		this.logoMeetup = logoMeetup;
+	}
+*/
+	public int getComunidadeId() {
+		return comunidadeId;
+	}
+
+	public void setComunidadeId(int comunidadeId) {
+		this.comunidadeId = comunidadeId;
 	}
 
 	public Date getData() {
@@ -44,44 +72,6 @@ public class Evento {
 
 	public void setData(Date data) {
 		this.data = data;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getLinkEvento() {
-		return linkEvento;
-	}
-
-	public void setLinkEvento(String linkEvento) {
-		this.linkEvento = linkEvento;
-	}
-
-	public Comunidade getComunidade() {
-		return comunidade;
-	}
-
-	public void setComunidade(Comunidade comunidade) {
-		this.comunidade = comunidade;
-	}
-
-	@Override
-	public String toString() {
-		return "Evento [id=" + id + ", nome=" + nome + ", data=" + data + ", endereco=" + endereco + ", descricao="
-				+ descricao + ", linkEvento=" + linkEvento + ", comunidade=" + comunidade + "]";
 	}
 	
 
