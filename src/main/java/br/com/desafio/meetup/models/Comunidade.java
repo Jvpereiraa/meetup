@@ -1,58 +1,89 @@
 package br.com.desafio.meetup.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
+
+import br.com.desafio.meetup.daos.EventoDAO;
 
 @Entity
 public class Comunidade {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	private int id;
 	
+	private String cidade;
 	private String nome;
-	private String linguagem;
-	private String email;
-	
-	@OneToMany
-	private List<Evento> evento;
+	@Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
+	private String logo;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getLinguagem() {
-		return linguagem;
+
+	public String getLogo() {
+		return logo;
 	}
-	public void setLinguagem(String linguagem) {
-		this.linguagem = linguagem;
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
-	public String getEmail() {
-		return email;
+	
+	public ComunidadeJson toComunidadeJsonProximoEvento(Comunidade comunidade) {
+		ComunidadeJson comunidadeJson = new ComunidadeJson();
+		comunidadeJson.setId(comunidade.getId());
+		comunidadeJson.setNome(comunidade.getNome());
+		comunidadeJson.setLogo(comunidade.getLogo());
+		comunidadeJson.setCidade(comunidade.getCidade());
+		
+		EventoDAO eventoDao = new EventoDAO();
+		Evento evento = eventoDao.getProximoEventosByIdComunidade(comunidade);
+		if(evento.getId() != 0) {
+			List<Evento> eventos = new ArrayList<>();
+			eventos.add(evento);
+		
+			comunidadeJson.setEvento(eventos);
+		}
+		return comunidadeJson;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public ComunidadeJson toComunidadeJson(Comunidade comunidade) {
+		ComunidadeJson comunidadeJson = new ComunidadeJson();
+		comunidadeJson.setId(getId());
+		comunidadeJson.setNome(comunidade.getNome());
+		comunidadeJson.setLogo(comunidade.getLogo());
+		comunidadeJson.setCidade(comunidade.getCidade());
+		
+		EventoDAO eventoDao = new EventoDAO();
+		List<Evento> eventos = eventoDao.getEventosByIdComunidade(comunidade);
+		comunidadeJson.setEvento(eventos);
+		
+		return comunidadeJson;
 	}
-	public int getId() {
-		return id;
+
+	public String getCidade() {
+		return cidade;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
-	public List<Evento> getEvento() {
-		return evento;
-	}
-	public void setEvento(List<Evento> evento) {
-		this.evento = evento;
-	}
-	@Override
-	public String toString() {
-		return "Comunidade [id=" + id + ", nome=" + nome + ", linguagem=" + linguagem + ", email=" + email + ", evento="
-				+ evento + "]";
-	}
+
 }
