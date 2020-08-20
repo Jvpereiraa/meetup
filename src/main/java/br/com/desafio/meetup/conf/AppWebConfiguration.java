@@ -4,7 +4,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.DateFormatterRegistrar;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.desafio.meetup.controllers.ComunidadeController;
@@ -13,7 +19,7 @@ import br.com.desafio.meetup.daos.ComunidadeDAO;
 
 @EnableWebMvc
 @ComponentScan(basePackageClasses = {HomeController.class,ComunidadeController.class,ComunidadeDAO.class})
-public class AppWebConfiguration {
+public class AppWebConfiguration extends WebMvcConfigurerAdapter{
 	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
@@ -33,6 +39,22 @@ public class AppWebConfiguration {
 		messageSourcer.setCacheSeconds(1);
 		
 		return messageSourcer;
+	}
+	
+	@Bean
+	public FormattingConversionService mvcConversionService() {
+	    DefaultFormattingConversionService conversionService = 
+	        new DefaultFormattingConversionService();
+	    DateFormatterRegistrar registrar = new DateFormatterRegistrar();
+	    registrar.setFormatter(new DateFormatter("dd/MM/yyyy HH:mm:ss"));
+	    registrar.registerFormatters(conversionService);
+
+	    return conversionService;
+	}
+	
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	    configurer.enable();
 	}
 
 }
