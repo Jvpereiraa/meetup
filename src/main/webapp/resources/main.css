@@ -1,0 +1,27 @@
+.card-display{
+	margin: 10px;
+    display: inline-block !important;
+    border: 2px solid #bcc0c7  !important;
+    
+}
+
+body{
+	
+}
+
+.footer-css{
+	background-color: #e9ecef;
+	
+}
+
+.header-margin{
+	margin: 55px !important;
+}
+
+.teste-desafio-display {
+    display: none;
+}
+
+.display-none{
+	display: none !important;
+}
