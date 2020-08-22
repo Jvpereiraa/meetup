@@ -99,24 +99,28 @@ public class ComunidadeDAO {
 		return manager.createQuery("Select d from Comunidade d", Comunidade.class).getResultList();
 	}
 
-	public List<Evento> getEventosByComunidade(Comunidade comunidade) {
-		return manager.createQuery("Select e from Evento e Where e.comunidadeId = " + comunidade.getId(), Evento.class).getResultList();
+	public List<Evento> getEventosByComunidade(int comunidadeId) {
+		return manager.createQuery("Select e from Evento e Where e.comunidadeId = :id", Evento.class)
+				.setParameter("id", comunidadeId)
+				.getResultList();
 	}
 
-	public Comunidade getComunidadeById(Comunidade comunidade) {
+	public Comunidade getComunidadeById(int comunidadeId) {
 		try {
-			return manager.createQuery("Select c from Comunidade c Where c.id = " + comunidade.getId(), Comunidade.class).getSingleResult();
+			return manager.createQuery("Select c from Comunidade c Where c.id = :id" , Comunidade.class)
+					.setParameter("id", comunidadeId)
+					.getSingleResult();
 		}catch(Exception e){
-			System.out.println("Nao foi encontrado nenhuma comunidade, comunidade id: " + comunidade.getId() );
-			return comunidade;
+			System.out.println("Nao foi encontrado nenhuma comunidade, comunidade id: " + comunidadeId );
+			return new Comunidade();
 		}
 	}
 
-	public List<Comunidade> getComunidadeByCidade(Comunidade comunidade) {
+	public List<Comunidade> getComunidadeByCidade(String cidade) {
 		try {
-			return manager.createQuery("Select c from Comunidade c Where c.cidade like '%" + comunidade.getCidade()+ "%'", Comunidade.class).getResultList();
+			return manager.createQuery("Select c from Comunidade c Where c.cidade like '%" + cidade+ "%'", Comunidade.class).getResultList();
 		}catch(Exception e){
-			System.out.println("Nao foi encontrado nenhuma comunidade, cidade: " + comunidade.getId() );
+			System.out.println("Nao foi encontrado nenhuma comunidade, cidade: " + cidade );
 			return null;
 		}
 	}
