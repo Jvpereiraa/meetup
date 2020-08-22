@@ -34,23 +34,23 @@ public class ComunidadeController {
 		
 	}*/
 	
-	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public ModelAndView form(Comunidade comunidade) {
 		return new ModelAndView("/comunidade/form");
-	}
+	}*/
 	
-	@RequestMapping(method = RequestMethod.POST)
+	/*@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView grava(Comunidade comunidade,
 			RedirectAttributes redirectAttributes) {
 		comunidadeDao.gravar(comunidade);
 		redirectAttributes.addFlashAttribute("sucesso", "Comunidade Cadastrada com sucesso");
 		
 		return new ModelAndView("redirect:eventos");
-	}
+	}*/
 	
 	@RequestMapping(value = "/listarEventos", method = RequestMethod.GET)
 	public ModelAndView listarEventos(Comunidade comunidade, RedirectAttributes redirectAttributes) {
-		comunidade = comunidadeDao.getComunidadeById(comunidade);
+		comunidade = comunidadeDao.getComunidadeById(comunidade.getId());
 		if(comunidade.getNome() == null || comunidade.getNome().isEmpty()) {
 			redirectAttributes.addFlashAttribute("falha", "Nenhuma comunidade com esse ID");
 			redirectAttributes.addFlashAttribute("show", "mostra-div");
@@ -65,7 +65,7 @@ public class ComunidadeController {
 	
 	@RequestMapping(value = "/listarComunidadeCidade", method = RequestMethod.GET)
 	public ModelAndView listarComunidadeCidade(Comunidade comunidade, RedirectAttributes redirectAttributes) {
-		List<Comunidade> comunidades = comunidadeDao.getComunidadeByCidade(comunidade);
+		List<Comunidade> comunidades = comunidadeDao.getComunidadeByCidade(comunidade.getCidade());
 		if(comunidades == null || comunidades.isEmpty()) {
 			redirectAttributes.addFlashAttribute("falha", "Nenhuma comunidade nessa regiao");
 			redirectAttributes.addFlashAttribute("show", "mostra-div");
