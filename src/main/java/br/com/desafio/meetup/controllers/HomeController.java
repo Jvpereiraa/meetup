@@ -23,6 +23,7 @@ import br.com.desafio.meetup.models.Comunidade;
 import br.com.desafio.meetup.models.ComunidadeJson;
 import br.com.desafio.meetup.models.Comunidades;
 import br.com.desafio.meetup.models.Evento;
+import br.com.desafio.meetup.utils.DadosIniciais;
 import br.com.desafio.meetup.validation.ComunidadeValidation;
 
 @Controller
@@ -45,13 +46,7 @@ public class HomeController {
 	public ModelAndView listar(Comunidade comunidadeParm) {
 		List<Comunidade> listaComunidades = comunidadeDao.listar();
 		if(listaComunidades.isEmpty()) {
-			String json = "";
-			try {
-				json = String.join(" ", Files.readAllLines(Paths.get("C:\\Users\\João\\eclipse-workspace\\meetup\\meetup\\meetups.json"), StandardCharsets.UTF_8));
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
+			String json = new DadosIniciais().getJson();
 			if(!json.isEmpty()) {
 				Comunidades comunidades = new Gson().fromJson(json, Comunidades.class);
 				List<ComunidadeJson> listaComunidade = comunidades.getComunidade();
