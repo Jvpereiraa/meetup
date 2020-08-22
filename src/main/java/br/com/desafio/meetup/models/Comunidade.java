@@ -54,7 +54,7 @@ public class Comunidade {
 		comunidadeJson.setCidade(comunidade.getCidade());
 		
 		EventoDAO eventoDao = new EventoDAO();
-		Evento evento = eventoDao.getProximoEventosByIdComunidade(comunidade);
+		Evento evento = eventoDao.getProximoEventosByIdComunidade(comunidade.getId());
 		if(evento.getId() != 0) {
 			List<Evento> eventos = new ArrayList<>();
 			eventos.add(evento);
@@ -72,7 +72,7 @@ public class Comunidade {
 		comunidadeJson.setCidade(comunidade.getCidade());
 		
 		EventoDAO eventoDao = new EventoDAO();
-		List<Evento> eventos = eventoDao.getEventosByIdComunidade(comunidade);
+		List<Evento> eventos = eventoDao.getEventosByIdComunidade(comunidade.getId());
 		comunidadeJson.setEvento(eventos);
 		
 		return comunidadeJson;
