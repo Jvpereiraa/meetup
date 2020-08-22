@@ -34,14 +34,14 @@ public class EventoDAO {
 		manager.persist(evento);
 	}
 
-	public List<Evento> getEventosByIdComunidade(Comunidade comunidade) {
+	public List<Evento> getEventosByIdComunidade(int comunidadeId) {
 		String sql = "Select e.id as id, e.data as data, e.detalhes as detalhes,"
 				+ "e.titulo as titulo, e.comunidadeId as comunidadeId from Evento e Where e.comunidadeId = ?";
 		List<Evento> eventos = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/meetup?useTimezone=true&serverTimezone=UTC", "root", "");
         		PreparedStatement stmt = connection.prepareStatement(sql);) {  
             
-            stmt.setInt(1, comunidade.getId()); 
+            stmt.setInt(1, comunidadeId); 
 
             ResultSet resultSet = stmt.executeQuery();  
             
@@ -64,7 +64,7 @@ public class EventoDAO {
         return eventos;
 	}
 	
-	public Evento getProximoEventosByIdComunidade(Comunidade comunidade) {
+	public Evento getProximoEventosByIdComunidade(int comunidadeId) {
 		Evento evento = new Evento();
 		String sql = "Select e.id as id, e.data as data, e.detalhes as detalhes,"
 				+ "e.titulo as titulo, e.comunidadeId as comunidadeId from Evento e Where e.comunidadeId = ? "
@@ -72,7 +72,7 @@ public class EventoDAO {
         try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/meetup?useTimezone=true&serverTimezone=UTC", "root", "");
         		PreparedStatement stmt = connection.prepareStatement(sql);) {  
             
-            stmt.setInt(1, comunidade.getId()); 
+            stmt.setInt(1, comunidadeId); 
 
             ResultSet resultSet = stmt.executeQuery();  
             
