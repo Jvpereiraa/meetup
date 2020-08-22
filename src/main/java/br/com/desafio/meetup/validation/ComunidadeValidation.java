@@ -8,10 +8,7 @@ import org.springframework.validation.Validator;
 import br.com.desafio.meetup.models.Comunidade;
 
 public class ComunidadeValidation implements Validator {
-	
-	public void valida(Comunidade comunidade, Errors erros) {
-		
-	}
+
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -20,8 +17,7 @@ public class ComunidadeValidation implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmpty(errors, "nome", "field.required");
-		ValidationUtils.rejectIfEmpty(errors, "linguagem", "field.required");
+		ValidationUtils.rejectIfEmpty(errors, "id", "field.required");
 	}
 
 }
