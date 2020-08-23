@@ -46,7 +46,7 @@ public class HomeController {
 	public ModelAndView listar(Comunidade comunidadeParm) {
 		List<Comunidade> listaComunidades = comunidadeDao.listar();
 		if(listaComunidades.isEmpty()) {
-			String json = new DadosIniciais().getJson();
+			String json = new DadosIniciais().getJson().toString();
 			if(!json.isEmpty()) {
 				Comunidades comunidades = new Gson().fromJson(json, Comunidades.class);
 				List<ComunidadeJson> listaComunidade = comunidades.getComunidade();

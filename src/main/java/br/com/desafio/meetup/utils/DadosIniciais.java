@@ -2,7 +2,7 @@ package br.com.desafio.meetup.utils;
 
 public class DadosIniciais {
 	
-	private String json = "{\r\n" + 
+	private StringBuilder json = new StringBuilder().append("{\r\n" + 
 			"	\"comunidade\":[\r\n" + 
 			"		{\r\n" + 
 			"			\"id\": 1,\r\n" + 
@@ -46,9 +46,9 @@ public class DadosIniciais {
 			"	\r\n" + 
 			"\r\n" + 
 			"\r\n" + 
-			"}";
+			"}");
 
-	public String getJson() {
+	public StringBuilder getJson() {
 		return json;
 	}
 
