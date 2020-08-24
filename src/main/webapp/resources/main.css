@@ -25,3 +25,7 @@ body{
 .display-none{
 	display: none !important;
 }
+
+.card-img-top{
+	height: 230px;
+}
