@@ -1,16 +1,17 @@
 package br.com.desafio.meetup.models;
 
-import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import br.com.desafio.meetup.utils.TimeUtils;
 
 @Entity
 public class Evento {
@@ -20,6 +21,7 @@ public class Evento {
 	private String titulo;
 	@DateTimeFormat
 	private Date data;
+	@Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
 	private String detalhes;
 	/*@Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
 	private String logoMeetup;*/
